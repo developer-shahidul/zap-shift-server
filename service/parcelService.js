@@ -27,9 +27,22 @@ const getParcel = async (id) => {
   return await parcelCollections.findOne(query);
 };
 
+const parcelPatch = async (id, status) => {
+  const db = await connectToDB();
+  const parcelCollections = db.collection("parcelCollections");
+  const query = { _id: new ObjectId(id) };
+  const updateDocs = {
+    $set: {
+      deliveryStatus: status,
+    },
+  };
+  return await parcelCollections.updateOne(query, updateDocs);
+};
+
 module.exports = {
   getParcels,
   parcelPost,
   parcelDelete,
   getParcel,
+  parcelPatch,
 };

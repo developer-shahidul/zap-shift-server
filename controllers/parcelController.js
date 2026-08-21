@@ -48,9 +48,22 @@ const getParcel = async (req, res) => {
   }
 };
 
+const parcelPatch = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { deliveryStatus } = req.body;
+    const result = await parcelService.parcelPatch(id, deliveryStatus);
+    res.send(result);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ success: false, message: "failed to parcel status patch" });
+  }
+};
 module.exports = {
   getParcels,
   parcelPost,
   parcelDelete,
   getParcel,
+  parcelPatch,
 };
