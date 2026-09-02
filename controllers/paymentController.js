@@ -77,6 +77,11 @@ const paymentSuccessPatch = async (req, res) => {
       return res.send({
         success: true,
         result,
+        payment: {
+          amount: session.amount_total / 100,
+          currency: session.currency,
+          paymentStatus: session.payment_status,
+        },
       });
     }
 

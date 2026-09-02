@@ -10,6 +10,14 @@ const getParcels = async (req, res) => {
     res.status(500).send({ success: false, message: "failed to parcel fetch" });
   }
 };
+const getParcelState = async (req, res) => {
+  try {
+    const result = await parcelService.getParcelState();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ message: "parcel state count fetch error" });
+  }
+};
 
 const parcelPost = async (req, res) => {
   try {
@@ -62,6 +70,7 @@ const parcelPatch = async (req, res) => {
 };
 module.exports = {
   getParcels,
+  getParcelState,
   parcelPost,
   parcelDelete,
   getParcel,

@@ -2,6 +2,7 @@ const express = require("express");
 
 const {
   getParcels,
+  getParcelState,
   parcelPost,
   parcelDelete,
   getParcel,
@@ -11,6 +12,7 @@ const {
 const router = express.Router();
 
 router.get("/", getParcels);
+router.get("/stats-count", getParcelState);
 router.get("/:id", getParcel);
 
 router.post("/", parcelPost);

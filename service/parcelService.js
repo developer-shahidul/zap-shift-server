@@ -6,6 +6,33 @@ const getParcels = async () => {
   const parcelCollections = db.collection("parcelCollections");
   return await parcelCollections.find({}).toArray();
 };
+const getParcelState = async () => {
+  const db = await connectToDB();
+  const parcelCollections = db.collection("parcelCollections");
+  const paid = await parcelCollections.countDocuments({
+    paymentStatus: "paid",
+  });
+  const Refunded = await parcelCollections.countDocuments({
+    deliveryStatus: "Refunded",
+  });
+  const Cancelled = await parcelCollections.countDocuments({
+    deliveryStatus: "Cancelled",
+  });
+  const Delivered = await parcelCollections.countDocuments({
+    deliveryStatus: "delivered",
+  });
+  const PaidReturn = await parcelCollections.countDocuments({
+    deliveryStatus: "Paid Return",
+  });
+  const total = await parcelCollections.countDocuments({});
+  return {
+    paid,
+    PaidReturn,
+    Delivered,
+    Refunded,
+    total,
+  };
+};
 
 const parcelPost = async (parcel) => {
   const db = await connectToDB();
@@ -41,6 +68,7 @@ const parcelPatch = async (id, status) => {
 
 module.exports = {
   getParcels,
+  getParcelState,
   parcelPost,
   parcelDelete,
   getParcel,
